@@ -57,8 +57,27 @@ async function displayGallery() {
     });
   }
   
-  // Appel des fonctions pour afficher la galerie et les catégories lorsque le document est prêt
-  document.addEventListener('DOMContentLoaded', async function() {
-    await displayGallery();
-    await fetchCategories(); // Appel pour récupérer les catégories et les stocker localement
-  });
+// Appel des fonctions pour afficher la galerie et les catégories lorsque le document est prêt
+document.addEventListener('DOMContentLoaded', async function() {
+await displayGallery();
+await fetchCategories(); // Appel pour récupérer les catégories et les stocker localement
+});
+  
+  // Sélection du premier élément <p> à l'intérieur du premier '.work' dans la galerie
+const firstTitleElement = document.querySelector('.gallery .work:nth-child(1) p');
+// Modification du texte du premier élément
+firstTitleElement.textContent = "Abat-jour Tahina";
+
+// Sélection du quatrième élément <p> à l'intérieur du quatrième '.work' dans la galerie
+const fourthTitleElement = document.querySelector('.gallery .work:nth-child(4) p');
+// Modification du texte du quatrième élément
+fourthTitleElement.textContent = "Villa “La Balisière” - Port-Louis";
+
+// Sélection du onzième élément <p> à l'intérieur du onzième '.work' dans la galerie
+const eleventhTitleElement = document.querySelector('.gallery .work:nth-child(11) p');
+// Modification du texte du onzième élément
+eleventhTitleElement.textContent = "Hôtel First Arte - New Delhi";
+
+console.log(firstTitleElement); // Vérification de la sélection
+// Modification du texte du premier élément
+firstTitleElement.textContent = "Abat-jour Tahina";
