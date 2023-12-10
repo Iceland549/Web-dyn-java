@@ -130,18 +130,20 @@ li:hover {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
-  }
-  
-  .categories a {
+	margin: 2em;
+}
+
+.categories-link {
 	text-decoration: none;
 	color: #1D6154;
 	border: 1px solid #1D6154;
-	padding: 5px;
-  }
-  
-  .categories a.active {
-	color: #1D6154;
-  }
+	padding: 5px 15px;
+	border-radius: 25px;
+}
+
+.categories-link.active {
+	background-color: #1D6154;
+}
   
 .gallery {
 	width: 100%;
