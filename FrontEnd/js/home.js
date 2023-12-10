@@ -1,6 +1,5 @@
-// Récupération des pièces éventuellement stockées dans le localStorage
 
-// Vérifie si les données 'works' sont déjà stockées localement, sinon les récupère depuis l'API
+// Fonction de récupération des données 'works' (localStorage ou API)
 async function fetchWorks() {
     let works = window.localStorage.getItem('works'); // Récupère les données 'works' du localStorage
     if (works === null) {
@@ -14,7 +13,7 @@ async function fetchWorks() {
     return works;
 }
 
-// Vérifie si les données 'categories' sont déjà stockées localement, sinon les récupère depuis l'API
+// Fonction de récupération des données 'works' (localStorage ou API)
 async function fetchCategories() {
     let categories = window.localStorage.getItem('categories'); // Récupère les données 'categories' du localStorage
     if (categories === null) {
@@ -72,13 +71,16 @@ async function displayGallery() {
 
   }
   
-// Appel des fonctions pour afficher la galerie et les catégories lorsque le document est prêt
-document.addEventListener('DOMContentLoaded', async function() {
-await displayGallery();
-await fetchCategories(); // Appel pour récupérer les catégories et les stocker localement
-});
-  
+document.addEventListener('DOMContentLoaded', async () => {
+    await displayGallery();
+    const categories = await fetchCategories();
+    const categoryButtons = await createCategoryButtons(categories);
 
-console.log(firstTitleElement); // Vérification de la sélection
-// Modification du texte du premier élément
-firstTitleElement.textContent = "Abat-jour Tahina";
+    categoryButtons.forEach(button => {
+        document.querySelector('.categories').appendChild(button);
+    });
+
+});
+
+
+
