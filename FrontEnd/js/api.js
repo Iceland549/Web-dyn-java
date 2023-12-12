@@ -35,3 +35,9 @@ function deleteWork(id) {
     .then((res) => res.json())
     .then(log => log)
 }
+
+async function fetchCategories() {
+    const response = await fetch('http://localhost:5678/api/categories');
+    const categories = await response.json();
+    return categories;
+}

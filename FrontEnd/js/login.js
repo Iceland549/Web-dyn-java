@@ -1,5 +1,5 @@
 
-// Supposons que tu récupères les informations du formulaire dans ces variables
+// Récupération des informations du formulaire dans ces variables
 const username = document.getElementById('username').value;
 const password = document.getElementById('password').value;
 
