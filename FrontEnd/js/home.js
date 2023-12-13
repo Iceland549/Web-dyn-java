@@ -1,4 +1,4 @@
-
+// Home.js //
 // Fonction de récupération des données 'works' (localStorage ou API)
 async function fetchWorks() {
     let works = window.localStorage.getItem('works'); 
@@ -19,25 +19,31 @@ async function fetchCategories() {
     if (categories === null) {
         const response = await fetch('http://localhost:5678/api/categories'); 
         categories = await response.json(); 
+
+        // Associer des identifiants spécifiques à chaque catégorie
+        categories.forEach((category) => {
+            category.categoryId = category.id;
+        });
+
         categories.unshift({ id: 0, name: 'Tous' }); 
         const valeurCategories = JSON.stringify(categories); 
         window.localStorage.setItem("categories", valeurCategories);  
     } else {
         categories = JSON.parse(categories);  
-    return categories;
     }
+    return categories;
 }
 
 // Fonction pour afficher les images de la galerie
 async function displayGallery() {
     const works = await fetchWorks();
-  
     const gallery = document.querySelector('.gallery');
   
     works.forEach(work => {
 
       const workElement = document.createElement('div');
       workElement.classList.add('work');
+      workElement.dataset.categoryId = work.category.id;
 
       const imageElement = document.createElement('img');
       imageElement.src = work.imageUrl;
