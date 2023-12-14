@@ -21,41 +21,55 @@ function createWorkCard(work) {
     return article;
 }
 
-// Fonction pour récupérer les catégories uniques depuis les données des travaux
-function getUniqueCategories(works) {
-    const categoriesSet = new Set();
-    works.forEach(work => {
-      categoriesSet.add(work.category.name); // Assurez-vous que "work.category.name" correspond à la propriété où se trouvent les noms des catégories
-    });
-    return ['Tous', ...categoriesSet]; // Ajoutez 'Tous' à la liste des catégories uniques
-  }
-
 // Fonction pour créer des boutons catégories
 async function createCategoryButtons(categories) {
-    const categoryButtons = [];
+  const categoryButtons = [];
 
-    categories.forEach(category => {
-        const categoryElement = document.createElement('a');
-        categoryElement.textContent = category.name;
-        categoryElement.href = '#';
-        categoryElement.classList.add('categories-link'); 
-        categoryElement.addEventListener('click', () => filterWorksByCategory(category));
+  categories.forEach((category, index) => {
+      const categoryElement = document.createElement('a');
+      categoryElement.textContent = category.name;
+      categoryElement.href = '#';
+      categoryElement.classList.add('categories-link'); 
 
-        categoryButtons.push(categoryElement);
-    });
+      if (index === 0) { // Si c'est le premier lien (Tous)
+          categoryElement.classList.add("active");  
+      }
 
-    return categoryButtons;
+      categoryElement.addEventListener('click', () => {
+          filterWorksByCategory(category);
+          updateCategory(index);
+      });
+
+      categoryButtons.push(categoryElement);
+  });
+
+  return categoryButtons;
 }
+
+// Mettre à jour la catégorie active
+async function updateCategory(index) {
+  const links = document.querySelectorAll(".categories-link");
+
+  // Mettre à jour la sélection visuelle des liens
+  links.forEach((link, i) => {
+      if (i === index) {
+          link.classList.add("active");
+      } else {
+          link.classList.remove("active");
+      }
+  });
+}
+
 
 // Fonction de filtrage des travaux par catégorie
 async function filterWorksByCategory(category) {
-  console.log('Catégorie sélectionnée :', category); // Affiche la catégorie sélectionnée
+  console.log('Catégorie sélectionnée :', category); 
   const gallery = document.querySelector('.gallery');
   const works = document.querySelectorAll('.work');
 
   works.forEach(work => {
     const workCategory = parseInt(work.dataset.categoryId);
-    console.log('Catégorie du travail :', workCategory); // Affiche le categoryId du travail
+    console.log('Catégorie du travail :', workCategory); 
     if (category.name === 'Tous' || workCategory === category.id) {
       work.style.display = 'block';
       } else {
@@ -64,6 +78,13 @@ async function filterWorksByCategory(category) {
   });
 }
 
-
+// Fonction pour récupérer les catégories uniques depuis les données des travaux
+function getUniqueCategories(works) {
+  const categoriesSet = new Set();
+  works.forEach(work => {
+    categoriesSet.add(work.category.name); 
+  });
+  return ['Tous', ...categoriesSet]; 
+}
 
 
