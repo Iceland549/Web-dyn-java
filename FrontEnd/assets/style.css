@@ -149,7 +149,8 @@ li:hover {
 }
 
 .categories-link.active {
-	background-color: #1D6154;
+	background: #1D6154;
+	color: #fff;
 }
   
 .gallery {
