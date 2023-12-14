@@ -20,11 +20,6 @@ async function fetchCategories() {
         const response = await fetch('http://localhost:5678/api/categories'); 
         categories = await response.json(); 
 
-        // Associer des identifiants spécifiques à chaque catégorie
-        categories.forEach((category) => {
-            category.categoryId = category.id;
-        });
-
         categories.unshift({ id: 0, name: 'Tous' }); 
         const valeurCategories = JSON.stringify(categories); 
         window.localStorage.setItem("categories", valeurCategories);  
@@ -68,6 +63,7 @@ async function displayGallery() {
     eleventhTitleElement.textContent = "Hôtel First Arte - New Delhi";
 
 }
+
 // Attente de chargement complet du DOM avant d'exécuter le code
 document.addEventListener('DOMContentLoaded', async () => {
     await displayGallery();
