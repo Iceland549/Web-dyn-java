@@ -1,3 +1,5 @@
+/* Fichier factory.js */
+
 // Fonction pour créer une carte de travail (WORK CARD)
 function createWorkCard(work) {
     const article = document.createElement('article'); 
@@ -31,7 +33,7 @@ async function createCategoryButtons(categories) {
       categoryElement.href = '#';
       categoryElement.classList.add('categories-link'); 
 
-      if (index === 0) { // Si c'est le premier lien (Tous)
+      if (index === 0) { 
           categoryElement.classList.add("active");  
       }
 
@@ -60,7 +62,6 @@ async function updateCategory(index) {
   });
 }
 
-
 // Fonction de filtrage des travaux par catégorie
 async function filterWorksByCategory(category) {
   console.log('Catégorie sélectionnée :', category); 
@@ -78,13 +79,6 @@ async function filterWorksByCategory(category) {
   });
 }
 
-// Fonction pour récupérer les catégories uniques depuis les données des travaux
-function getUniqueCategories(works) {
-  const categoriesSet = new Set();
-  works.forEach(work => {
-    categoriesSet.add(work.category.name); 
-  });
-  return ['Tous', ...categoriesSet]; 
-}
+
 
 

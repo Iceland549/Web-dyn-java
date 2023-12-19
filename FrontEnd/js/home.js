@@ -1,4 +1,5 @@
-// Home.js //
+/* Fichier home.js */
+
 // Fonction de récupération des données 'works' (localStorage ou API)
 async function fetchWorks() {
     let works = window.localStorage.getItem('works'); 
@@ -19,8 +20,6 @@ async function fetchCategories() {
     if (categories === null) {
         const response = await fetch('http://localhost:5678/api/categories'); 
         categories = await response.json(); 
-
-        categories.unshift({ id: 0, name: 'Tous' }); 
         const valeurCategories = JSON.stringify(categories); 
         window.localStorage.setItem("categories", valeurCategories);  
     } else {
@@ -33,26 +32,30 @@ async function fetchCategories() {
 async function displayGallery() {
     const works = await fetchWorks();
     const gallery = document.querySelector('.gallery');
-  
+    console.log('Nombre de travaux récupérés :', works.length);
+
     works.forEach(work => {
+        console.log('Travail en cours de traitement :', work.title);
 
-      const workElement = document.createElement('div');
-      workElement.classList.add('work');
-      workElement.dataset.categoryId = work.category.id;
+        const workElement = document.createElement('div');
+        workElement.classList.add('work');
+        workElement.dataset.categoryId = work.category.id;
 
-      const imageElement = document.createElement('img');
-      imageElement.src = work.imageUrl;
-      imageElement.alt = work.title;
+        const imageElement = document.createElement('img');
+        imageElement.src = work.imageUrl;
+        imageElement.alt = work.title;
 
-      const titleElement = document.createElement('p');
-      titleElement.textContent = work.title;  
+        const titleElement = document.createElement('p');
+        titleElement.textContent = work.title;  
 
-      workElement.appendChild(imageElement);
-      workElement.appendChild(titleElement); 
+        workElement.appendChild(imageElement);
+        workElement.appendChild(titleElement); 
 
-      gallery.appendChild(workElement);  
+        gallery.appendChild(workElement);  
 
     });
+    console.log('Affichage des travaux terminé !');
+
     const firstTitleElement = document.querySelector('.gallery .work:nth-child(1) p');
     firstTitleElement.textContent = "Abat-jour Tahina";
 
