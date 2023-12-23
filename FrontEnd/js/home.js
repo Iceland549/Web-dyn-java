@@ -59,6 +59,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 function isAdmin() {
   if (window.localStorage.getItem("token")) {
     document.querySelector(".categories").style.display = "none";
+    document.querySelector("#info-bar").style.display = "flex";
+    document.querySelector("#editLink").style.display = "block";
     const login = document.getElementById("login");
     login.innerText = "logout";
     login.href = "#";
@@ -68,3 +70,5 @@ function isAdmin() {
     });
   }
 }
+
+
