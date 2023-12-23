@@ -1,81 +1,70 @@
 /* Fichier home.js */
 
-// Fonction de récupération des données 'works' (localStorage ou API)
-async function fetchWorks() {
-    let works = window.localStorage.getItem('works'); 
-    if (works === null) {
-        const response = await fetch('http://localhost:5678/api/works'); 
-        works = await response.json(); 
-        const valeurWorks = JSON.stringify(works); 
-        window.localStorage.setItem("works", valeurWorks); 
-    } else {
-        works = JSON.parse(works); 
-    }
-    return works;
-}
-
-// Fonction de récupération des données 'works' (localStorage ou API)
-async function fetchCategories() {
-    let categories = window.localStorage.getItem('categories'); 
-    if (categories === null) {
-        const response = await fetch('http://localhost:5678/api/categories'); 
-        categories = await response.json(); 
-        const valeurCategories = JSON.stringify(categories); 
-        window.localStorage.setItem("categories", valeurCategories);  
-    } else {
-        categories = JSON.parse(categories);  
-    }
-    return categories;
-}
+import { fetchWorks, fetchCategories } from "./api.js";
+import { createWorkCard, createCategoryButtons } from "./factory.js";
 
 // Fonction pour afficher les images de la galerie
 async function displayGallery() {
-    const works = await fetchWorks();
-    const gallery = document.querySelector('.gallery');
-    console.log('Nombre de travaux récupérés :', works.length);
+  const works = await fetchWorks();
+  const gallery = document.querySelector(".gallery");
+  console.log("Nombre de travaux récupérés :", works.length);
 
-    works.forEach(work => {
-        console.log('Travail en cours de traitement :', work.title);
+  works.forEach((work) => {
+    const workElement = createWorkCard(work);
+    gallery.appendChild(workElement);
+  });
+  console.log("Affichage des travaux terminé !");
+}
 
-        const workElement = document.createElement('div');
-        workElement.classList.add('work');
-        workElement.dataset.categoryId = work.category.id;
+function filterWorksByCategory(category, index) {
+  const works = document.querySelectorAll(".work");
+  const links = document.querySelectorAll(".categories-link");
 
-        const imageElement = document.createElement('img');
-        imageElement.src = work.imageUrl;
-        imageElement.alt = work.title;
+  works.forEach((work) => {
+    const workCategoryId = Number(work.dataset.category);
+    work.style.display =
+      category.name === "Tous" || workCategoryId === category.id
+        ? "block"
+        : "none";
+  });
 
-        const titleElement = document.createElement('p');
-        titleElement.textContent = work.title;  
-
-        workElement.appendChild(imageElement);
-        workElement.appendChild(titleElement); 
-
-        gallery.appendChild(workElement);  
-
-    });
-    console.log('Affichage des travaux terminé !');
-
-    const firstTitleElement = document.querySelector('.gallery .work:nth-child(1) p');
-    firstTitleElement.textContent = "Abat-jour Tahina";
-
-    const fourthTitleElement = document.querySelector('.gallery .work:nth-child(4) p');
-    fourthTitleElement.textContent = "Villa “La Balisière” - Port-Louis";
-
-    const eleventhTitleElement = document.querySelector('.gallery .work:nth-child(11) p');
-    eleventhTitleElement.textContent = "Hôtel First Arte - New Delhi";
-
+  links.forEach((link, i) => {
+    if (i === index) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
 }
 
 // Attente de chargement complet du DOM avant d'exécuter le code
-document.addEventListener('DOMContentLoaded', async () => {
-    await displayGallery();
-    const categories = await fetchCategories();
-    const categoryButtons = await createCategoryButtons(categories);
-
-    categoryButtons.forEach(button => {
-        document.querySelector('.categories').appendChild(button);
+document.addEventListener("DOMContentLoaded", async () => {
+  await displayGallery();
+  let categories = await fetchCategories();
+  categories = [{ id: null, name: "Tous" }, ...categories];
+  const categoriesContainer = document.querySelector(".categories");
+  categories.forEach((category, index) => {
+    const categoryElement = createCategoryButtons(category);
+    categoriesContainer.appendChild(categoryElement);
+    categoryElement.addEventListener("click", () => {
+      filterWorksByCategory(category, index);
     });
-
+    if (category.name === "Tous") {
+      categoryElement.classList.add("active");
+    }
+  });
+  isAdmin();
 });
 
+function isAdmin() {
+  if (window.localStorage.getItem("token")) {
+    document.querySelector(".categories").style.display = "none";
+    const login = document.getElementById("login");
+    login.innerText = "logout";
+    login.href = "#";
+    login.addEventListener("click", () => {
+      window.localStorage.clear();
+      window.location.reload();
+    });
+  }
+}
