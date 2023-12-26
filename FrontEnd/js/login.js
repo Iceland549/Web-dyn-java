@@ -10,14 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             const response = await loginUser(email, password);
-            handleSuccessfulLogin(response);
+            loginSuccess(response);
         } catch (error) {
             console.error('Erreur de connexion:', error);
         }
     });
 });
 
-function handleSuccessfulLogin(response) {
+function loginSuccess(response) {
     // Code à exécuter après une connexion réussie (redirection, stockage du token)
     window.localStorage.setItem('token', response.token);
     window.location.href = '/';
