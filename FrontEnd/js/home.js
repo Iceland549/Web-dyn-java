@@ -70,5 +70,3 @@ function isAdmin() {
     });
   }
 }
-
-

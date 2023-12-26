@@ -151,7 +151,7 @@ li:hover {
   
 /* Styles de base pour la modale */
 .modal {
-    display: none; 
+	display: flex;
     position: fixed;
     z-index: 9999;
     left: 0;
@@ -163,6 +163,9 @@ li:hover {
 }
 
 .modal-content {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: #fefefe;
     margin: 10% auto;
     padding: 20px;
@@ -171,9 +174,35 @@ li:hover {
     height: 688px;
     position: relative;
 }
+#titlemodal {
+	padding-top: 35px;
+	color: black;
+	font-size: 26px;
+	font-style: normal;
+	font-weight: 400;
+}
+.line {
+    width: 420px;
+    border: none;
+    border-top: 1px solid #888; 
+    margin: 20px auto; 
+}
 
+.add-photo-btn {
+	font-family: 'Work Sans';
+	display: flex;
+	justify-content: center;
+	color: #FFFEF8;
+	border: 1px solid #1D6154;
+	padding: 5px 15px;
+	border-radius: 25px;
+	background-color: #1D6154;
+}
 /* Style pour le bouton de fermeture */
 .close {
+	position: absolute;
+	margin-right: 20px;
+	right: 0;
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -219,6 +248,8 @@ li:hover {
     display: none;
     align-items: center;
     gap: 10px;
+    padding: 10px 20px; 
+    font-family: 'Work Sans'; 
 }
 
 .gallery {
