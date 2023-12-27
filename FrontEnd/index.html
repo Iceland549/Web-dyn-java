@@ -17,7 +17,7 @@
     <meta name="description" content="" />
     <link rel="stylesheet" href="./assets/style.css" />
     <script defer type="module" src="./js/home.js"></script>
-    <script defer src="./js/modale.js"></script>
+    <script defer type="module" src="./js/modale.js"></script>
   </head>
   <body>
     <a href="#" id="info-bar">
@@ -65,13 +65,30 @@
           <!-- Structure de la modale -->
           <dialog>
             <div class="modal-content">
-              <a href="#" class="close"><i class="fa-solid fa-xmark"></i></a>           
+              <a href="#" class="close"><i class="fa-solid fa-xmark"></i></a>
               <h2 id="titlemodal">Galerie photo</h2>
               <div id="imageGallery" class="modalGallery"></div>
-              <hr class="line">
+              <hr class="line" />
               <button id="addPhotoBtn" class="add-photo-btn">
                 Ajouter une photo
               </button>
+            </div>
+          </dialog>
+          <dialog id="secondModal">
+            <div class="modal-content">
+              <i class="fa-arrow-left"></i>
+              <a href="#" class="close"><i class="fa-solid fa-xmark"></i></a>
+              <h2 id="titlemodal">Ajout photo</h2>
+              <div id="photoUpload" class="photo-upload">
+                + Ajouter photo Jpg, png; -4mo max.
+              </div>
+              Titre
+              <input type="text" placeholder="" />
+              Catégorie
+              <select name="category">
+                Option1, Option2, etc.
+              </select>
+              <button type="submit">Valider</button>
             </div>
           </dialog>
           <div id="editLink">
