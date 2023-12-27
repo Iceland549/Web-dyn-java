@@ -153,7 +153,6 @@ li:hover {
 .modal {
 	display: flex;
     position: fixed;
-    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
@@ -167,12 +166,26 @@ li:hover {
     flex-direction: column;
     align-items: center;
     background-color: #fefefe;
-    margin: 10% auto;
+	border-radius: 10px;
+    margin: 0;
     padding: 20px;
     border: 1px solid #888;
-    width: 630px;
-    height: 688px;
+    width: 500px;
+    height: 400px;
     position: relative;
+}
+.modalGallery {
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.work-card {
+	position: relative;
+}
+.fa-trash {
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }
 #titlemodal {
 	padding-top: 35px;
@@ -183,9 +196,8 @@ li:hover {
 }
 .line {
     width: 420px;
-    border: none;
-    border-top: 1px solid #888; 
-    margin: 20px auto; 
+    border-top: 1px solid 888; 
+    margin: 40px auto; 
 }
 
 .add-photo-btn {
