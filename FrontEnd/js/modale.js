@@ -1,79 +1,42 @@
-/*
-import { addPhoto, deletePhoto } from './api.js';
+// modale.js
+import { fetchWorks } from "./api.js";
 
-// Récupération des éléments de la modale
-const galleryModal = document.getElementById('galleryModal');
-const imageGallery = document.getElementById('imageGallery');
-const addPhotoBtn = document.getElementById('addPhotoBtn');
-const closeBtn = document.querySelector('.close');
+// Créez une carte de travail pour chaque image
+function createWorkCard(work) {
+    const article = document.createElement("article");
+    article.classList.add("work-card");
 
-// Fonction pour ouvrir la modale
-function openModal() {
-    galleryModal.style.display = 'block';
+    const img = document.createElement("img");
+    img.src = work.imageUrl;
+    img.style.width = "78px";
+    img.style.height = "104px";
+    article.appendChild(img);
+
+    const trashIcon = document.createElement("i");
+    trashIcon.classList.add("fa-trash");
+    trashIcon.addEventListener("click", () => {
+        // Supprimez l'œuvre du DOM
+        article.remove();
+
+    });
+    article.appendChild(trashIcon);
+
+    return article;
 }
 
-// Fonction pour fermer la modale
-function closeModal() {
-    galleryModal.style.display = 'none';
+// Affichez les images de la galerie en miniature dans la modale
+async function displayGalleryInModal() {
+    const works = await fetchWorks();
+    const modalContent = document.querySelector(".modalGallery");
+
+    works.forEach((work) => {
+      const article = createWorkCard(work);
+      modalContent.appendChild(article);
+    });
 }
+displayGalleryInModal();
 
-// Événement pour ouvrir la modale lors du clic sur le lien 'modifier'
-document.getElementById('editLink').addEventListener('click', openModal);
 
-// Événement pour fermer la modale lors du clic sur la croix
-closeBtn.addEventListener('click', closeModal);
-
-// Événement pour fermer la modale lors du clic en dehors de la fenêtre modale
-window.addEventListener('click', (event) => {
-    if (event.target === galleryModal) {
-        closeModal();
-    }
-});
-
-// Événement pour ajouter une photo (ouvrir la seconde modale)
-addPhotoBtn.addEventListener('click', async () => {
-    // Appel de la fonction pour ajouter une photo
-    const photo = {}; // Remplacez ceci par les données de la photo à ajouter
-    try {
-        const addedPhoto = await addPhoto(photo);
-        // Vous pouvez maintenant ajouter la photo ajoutée à votre galerie
-    } catch (error) {
-        console.error('Erreur lors de l\'ajout de la photo:', error);
-    }
-});
-
-// Fonction pour afficher les images dans la galerie
-async function displayImages() {
-    try {
-        const images = await getImages(); // Assurez-vous que getImages est une fonction qui récupère les images depuis le backend
-        imageGallery.innerHTML = ''; // Pour vider la galerie avant d'afficher les nouvelles images
-        images.forEach((image) => {
-            const imageElement = document.createElement('div');
-            imageElement.classList.add('image');
-            imageElement.innerHTML = `<img src="${image.src}" alt="${image.alt}">
-                                      <span class="delete-icon"><i class="fas fa-trash"></i></span>`;
-            // Événement pour supprimer une image
-            imageElement.querySelector('.delete-icon').addEventListener('click', async () => {
-                try {
-                    // Suppression de l'image en appelant la fonction deletePhoto de l'API
-                    await deletePhoto(image.id); // Assurez-vous que deletePhoto prend l'ID de l'image comme paramètre
-            
-                    // Ensuite, recharger la galerie après la suppression de l'image
-                    displayImages(); // Une fonction qui charge les images dans la galerie depuis le backend
-                } catch (error) {
-                    console.error('Erreur lors de la suppression de l\'image:', error);
-                }
-            });
-            imageGallery.appendChild(imageElement);
-        });
-    } catch (error) {
-        console.error('Erreur lors de la récupération des images:', error);
-    }
-}
-
-// Appel de la fonction pour charger les images au chargement de la page
-window.addEventListener('DOMContentLoaded', displayImages);
-*/
 // Boîte de dialog modale
 const dialog = document.querySelector("dialog");
 const showButton = document.querySelector("#modifierLink");
@@ -90,3 +53,43 @@ closeButton.addEventListener("click", (event) => {
     event.preventDefault();
     dialog.close();
   });
+
+// Sélectionnez l'élément i qui a la classe "fa-arrow-left" et stockez-le dans une variable, par exemple `backButton`.
+const backButton = document.querySelector(".fa-arrow-left");
+
+// Ajoutez un écouteur d'événements au clic sur le bouton backButton, qui va cacher la deuxième modale et afficher la première modale. Vous pouvez utiliser les méthodes `close` et `showModal` sur les éléments dialog pour cela.
+backButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    // Cachez la deuxième modale
+    dialog2.close();
+    // Affichez la première modale
+    dialog.showModal();
+});
+
+// Sélectionnez l'élément dialog qui a l'id "secondModal"
+const dialog2 = document.querySelector("#secondModal");
+
+// Sélectionnez le bouton qui a l'id "addPhotoBtn"
+const addButton = document.querySelector("#addPhotoBtn");
+
+// Ajoutez un écouteur d'événements au clic sur le bouton addButton
+addButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    // Cachez la première modale
+    dialog.close();
+    // Affichez la deuxième modale
+    dialog2.showModal();
+});
+
+// Sélectionnez le bouton qui a la classe "close" dans la deuxième modale
+const closeButton2 = document.querySelector("#secondModal .close");
+
+// Ajoutez un écouteur d'événements au clic sur le bouton closeButton2
+closeButton2.addEventListener("click", (event) => {
+    event.preventDefault();
+    // Fermez la deuxième modale
+    dialog2.close();
+    // Affichez la première modale
+    dialog.showModal();
+});
+
