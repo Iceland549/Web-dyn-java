@@ -63,7 +63,7 @@ const dialog2 = document.querySelector("#secondModal");
 const addButton = document.querySelector("#addPhotoBtn");
 const closeTwo = document.querySelector(".closeTwo");
 
-// Ajoutez un écouteur d'événements au clic sur le bouton backButton, qui va cacher la deuxième modale et afficher la première modale. Vous pouvez utiliser les méthodes `close` et `showModal` sur les éléments dialog pour cela.
+// Ajoutez un écouteur d'événements au clic sur le bouton backButton
 backButton.addEventListener("click", (event) => {
     event.preventDefault();
     dialog2.close();
@@ -108,5 +108,17 @@ document.querySelector('.photo-upload').addEventListener('click', function() {
     };
     input.click();
 });
+
+// Créer un élément select pour les catégories
+const select = document.querySelector('.category-secondModal_select');
+
+// Ajouter les options de catégorie
+['Objets', 'Appartements', 'Hôtels et restaurants', 'Bar et restaurants'].forEach(function(categorie) {
+    const option = document.createElement('option');
+    option.value = categorie;
+    option.text = categorie;
+    select.appendChild(option);
+});
+
 
 
