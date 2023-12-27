@@ -150,54 +150,61 @@ li:hover {
   }
   
 /* Styles de base pour la modale */
-.modal {
-	display: flex;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7);
+.modal, #secondModal {
+	display: none;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgba(0, 0, 0, 0.3);
+	justify-content: center;
+	align-items: flex-start;
 }
 
 .modal-content {
 	display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #fefefe;
+	flex-direction: column;
+	align-items: center;
+	background-color: #fefefe;
 	border-radius: 10px;
-    margin: 0;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 500px;
-    height: 400px;
-    position: relative;
+	margin: 0;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 600px;
+	height: 500px;
+	position: relative;
+}
+#titlemodal {
+	display: flex; 
+	color: black;
+	justify-content: center; 
+	align-items: center; 
+	width: 100%; 
+	font-family: 'Work Sans';
+	font-weight: normal;
 }
 .modalGallery {
 	display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 5px;
 }
+
 .work-card {
 	position: relative;
 }
+
 .fa-trash {
 	position: absolute;
 	top: 5px;
 	right: 5px;
+	cursor: pointer;
 }
-#titlemodal {
-	padding-top: 35px;
-	color: black;
-	font-size: 26px;
-	font-style: normal;
-	font-weight: 400;
-}
+
 .line {
-    width: 420px;
-    border-top: 1px solid 888; 
-    margin: 40px auto; 
+	width: 420px;
+	border-top: 1px solid 888; 
+	margin: 40px auto; 
 }
 
 .add-photo-btn {
@@ -209,26 +216,80 @@ li:hover {
 	padding: 5px 15px;
 	border-radius: 25px;
 	background-color: #1D6154;
+	cursor: pointer;
 }
-/* Style pour le bouton de fermeture */
-.close {
+.modal1-addPhoto {
+	cursor: pointer;
+}
+.closeOne, .closeTwo {
 	position: absolute;
 	margin-right: 20px;
 	right: 0;
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+	color: black;
+	float: right;
+	font-size: 15px;
+	font-weight: bold;
+	cursor: pointer;
 }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+/* style pour la secondModale */
+#secondModal {
+	display: none; 
+	background-color: rgba(0,0,0,0.4); 
+}
+.fa-arrow-left {
+	display: flex;
+}
+.secondModal-content {
+	display: flex;
+	flex-direction: column; 
+	align-items: center;
+	background-color: #fefefe;
+	border-radius: 10px;
+	margin: 0;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 600px;
+	height: 500px;
+	position: relative;
+	justify-content: space-between; 
+}
+.secondModal-content h2 {
+	display: flex; 
+	color: black;
+	justify-content: center; 
+	align-items: center; 
+	width: 100%; 
+	font-family: 'Work Sans';
+	font-weight: normal;
+}
+#photoUpload{
+	display: contents;
+}
+.modal2-addPhoto {
+
+}
+.title-secondModal, .category-secondModal {
+	display: flex;
+}
+
+.photo-validate {
+	font-family: 'Work Sans';
+	display: flex;
+	justify-content: center;
+	color: #FFFEF8;
+	border: 1px solid #1D6154;
+	padding: 5px 15px;
+	border-radius: 25px;
+	background-color: #1D6154;
+	cursor: pointer;
+}
+.category-secondModal {
+	cursor: pointer;
 }
 
 
+/* style pour les catégories */
 .categories {
 	display: flex;
 	justify-content: center;
