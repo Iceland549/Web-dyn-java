@@ -37,59 +37,76 @@ async function displayGalleryInModal() {
 displayGalleryInModal();
 
 
-// Boîte de dialog modale
-const dialog = document.querySelector("dialog");
+// Boîte de dialog modale 1
+const dialog = document.querySelector("#firstModal");
 const showButton = document.querySelector("#modifierLink");
-const closeButton = document.querySelector(".close");
+const closeOne = document.querySelector(".closeOne");
 
 // Le bouton "Afficher la fenêtre" ouvre le dialogue
 showButton.addEventListener("click", (event) => {
     event.preventDefault();
     dialog.showModal();
+    dialog.style.display = 'flex';
   });
 
 // Le bouton "Fermer" ferme le dialogue
-closeButton.addEventListener("click", (event) => {
+closeOne.addEventListener("click", (event) => {
     event.preventDefault();
     dialog.close();
-  });
+    dialog.style.display = 'none';
 
-// Sélectionnez l'élément i qui a la classe "fa-arrow-left" et stockez-le dans une variable, par exemple `backButton`.
+});
+
+// Flèche retour et modale 2
 const backButton = document.querySelector(".fa-arrow-left");
+const dialog2 = document.querySelector("#secondModal");
+const addButton = document.querySelector("#addPhotoBtn");
+const closeTwo = document.querySelector(".closeTwo");
 
 // Ajoutez un écouteur d'événements au clic sur le bouton backButton, qui va cacher la deuxième modale et afficher la première modale. Vous pouvez utiliser les méthodes `close` et `showModal` sur les éléments dialog pour cela.
 backButton.addEventListener("click", (event) => {
     event.preventDefault();
-    // Cachez la deuxième modale
     dialog2.close();
-    // Affichez la première modale
+    dialog2.style.display = 'none';
     dialog.showModal();
 });
 
-// Sélectionnez l'élément dialog qui a l'id "secondModal"
-const dialog2 = document.querySelector("#secondModal");
-
-// Sélectionnez le bouton qui a l'id "addPhotoBtn"
-const addButton = document.querySelector("#addPhotoBtn");
 
 // Ajoutez un écouteur d'événements au clic sur le bouton addButton
 addButton.addEventListener("click", (event) => {
     event.preventDefault();
-    // Cachez la première modale
     dialog.close();
-    // Affichez la deuxième modale
+    dialog2.style.display = 'flex';
     dialog2.showModal();
 });
 
-// Sélectionnez le bouton qui a la classe "close" dans la deuxième modale
-const closeButton2 = document.querySelector("#secondModal .close");
-
-// Ajoutez un écouteur d'événements au clic sur le bouton closeButton2
-closeButton2.addEventListener("click", (event) => {
+// Ajoutez un écouteur d'événements au clic sur le bouton closeTwo
+closeTwo.addEventListener("click", (event) => {
     event.preventDefault();
-    // Fermez la deuxième modale
     dialog2.close();
-    // Affichez la première modale
+    dialog2.style.display = 'none';
     dialog.showModal();
 });
+
+// Ajouter une photo dans modale 2
+document.querySelector('.photo-upload').addEventListener('click', function() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/png, image/jpeg';
+    input.onchange = function(event) {
+        const file = event.target.files[0];
+        if (file.size <= 4000000) { 
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.querySelector('.photo-container').innerHTML = `<img src="${e.target.result}" alt="Photo">`;
+                document.querySelector('.photo-upload').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert('Le fichier est trop grand !');
+        }
+    };
+    input.click();
+});
+
 
