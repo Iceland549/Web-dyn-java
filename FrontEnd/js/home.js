@@ -16,6 +16,7 @@ async function displayGallery() {
   console.log("Affichage des travaux terminé !");
 }
 
+// Cette fonction filtre les travaux en fonction de la catégorie sélectionnée et met à jour les liens de catégorie
 function filterWorksByCategory(category, index) {
   const works = document.querySelectorAll(".work");
   const links = document.querySelectorAll(".categories-link");
@@ -56,6 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   isAdmin();
 });
 
+// Fonction pour vérifier si l'utilisateur est un administrateur
 function isAdmin() {
   if (window.localStorage.getItem("token")) {
     document.querySelector(".categories").style.display = "none";
