@@ -13,7 +13,7 @@ function createWorkCard(work) {
     article.appendChild(img);
 
     const trashIcon = document.createElement("i");
-    trashIcon.classList.add("fa-trash");
+    trashIcon.classList.add("fa", "fa-solid", "fa-trash-can");
     trashIcon.addEventListener("click", () => {
         // Supprimez l'œuvre du DOM
         article.remove();
