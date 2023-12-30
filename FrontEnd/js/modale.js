@@ -1,41 +1,47 @@
 // modale.js
-import { fetchWorks } from "./api.js";
+import { fetchWorks, deleteWork, fetchCategories } from "./api.js";
 
 // Créez une carte de travail pour chaque image
 function createWorkCard(work) {
-    const article = document.createElement("article");
-    article.classList.add("work-card");
+  const article = document.createElement("article");
+  article.classList.add("work-card");
 
-    const img = document.createElement("img");
-    img.src = work.imageUrl;
-    img.style.width = "78px";
-    img.style.height = "104px";
-    article.appendChild(img);
+  const img = document.createElement("img");
+  img.src = work.imageUrl;
+  img.style.width = "78px";
+  img.style.height = "104px";
+  article.appendChild(img);
 
-    const trashIcon = document.createElement("i");
-    trashIcon.classList.add("fa", "fa-solid", "fa-trash-can");
-    trashIcon.addEventListener("click", () => {
-        // Supprimez l'œuvre du DOM
-        article.remove();
+  const trashIcon = document.createElement("i");
+  trashIcon.classList.add("fa", "fa-solid", "fa-trash-can");
+  trashIcon.addEventListener("click", async () => {
+    // Supprimez l'œuvre du DOM
+    try {
+      const deleteWorkId = await deleteWork(work.id);
+      const workToDelete = document.querySelector(`#work-${deleteWorkId}`);
+      console.log(workToDelete);
+      workToDelete.remove();
+      article.remove();
+    } catch (error) {
+      alert(error);
+    }
+  });
+  article.appendChild(trashIcon);
 
-    });
-    article.appendChild(trashIcon);
-
-    return article;
+  return article;
 }
 
 // Affichez les images de la galerie en miniature dans la modale
 async function displayGalleryInModal() {
-    const works = await fetchWorks();
-    const modalContent = document.querySelector(".modalGallery");
+  const works = await fetchWorks();
+  const modalContent = document.querySelector(".modalGallery");
 
-    works.forEach((work) => {
-      const article = createWorkCard(work);
-      modalContent.appendChild(article);
-    });
+  works.forEach((work) => {
+    const article = createWorkCard(work);
+    modalContent.appendChild(article);
+  });
 }
 displayGalleryInModal();
-
 
 // Boîte de dialog modale 1
 const dialog = document.querySelector("#firstModal");
@@ -44,17 +50,16 @@ const closeOne = document.querySelector(".closeOne");
 
 // Le bouton "Afficher la fenêtre" ouvre le dialogue
 showButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    dialog.showModal();
-    dialog.style.display = 'flex';
-  });
+  event.preventDefault();
+  dialog.showModal();
+  dialog.style.display = "flex";
+});
 
 // Le bouton "Fermer" ferme le dialogue
 closeOne.addEventListener("click", (event) => {
-    event.preventDefault();
-    dialog.close();
-    dialog.style.display = 'none';
-
+  event.preventDefault();
+  dialog.close();
+  dialog.style.display = "none";
 });
 
 // Flèche retour et modale 2
@@ -65,60 +70,111 @@ const closeTwo = document.querySelector(".closeTwo");
 
 // Ajoutez un écouteur d'événements au clic sur le bouton backButton
 backButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    dialog2.close();
-    dialog2.style.display = 'none';
-    dialog.showModal();
+  event.preventDefault();
+  dialog2.close();
+  dialog2.style.display = "none";
+  dialog.showModal();
 });
-
 
 // Ajoutez un écouteur d'événements au clic sur le bouton addButton
 addButton.addEventListener("click", (event) => {
-    event.preventDefault();
-    dialog.close();
-    dialog2.style.display = 'flex';
-    dialog2.showModal();
+  event.preventDefault();
+  dialog.close();
+  dialog2.style.display = "flex";
+  dialog2.showModal();
 });
 
 // Ajoutez un écouteur d'événements au clic sur le bouton closeTwo
 closeTwo.addEventListener("click", (event) => {
-    event.preventDefault();
-    dialog2.close();
-    dialog2.style.display = 'none';
-    dialog.showModal();
+  event.preventDefault();
+  dialog2.close();
+  dialog2.style.display = "none";
+  dialog.showModal();
 });
 
-// Ajouter une photo dans modale 2
-document.querySelector('.photo-upload').addEventListener('click', function() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/png, image/jpeg';
-    input.onchange = function(event) {
-        const file = event.target.files[0];
-        if (file.size <= 4000000) { 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.querySelector('.photo-container').innerHTML = `<img src="${e.target.result}" alt="Photo">`;
-                document.querySelector('.photo-upload').style.display = 'none';
-            };
-            reader.readAsDataURL(file);
-        } else {
-            alert('Le fichier est trop grand !');
-        }
+// Ajout photo et changement btn Valider
+document.addEventListener("DOMContentLoaded", (event) => {
+  // Ajouter une photo dans modale 2
+  document.querySelector("#photoUpload").addEventListener("click", function () {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/png, image/jpeg";
+    input.onchange = function (event) {
+      const file = event.target.files[0];
+      if (file.size <= 4000000) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.querySelector(
+            ".photo-container"
+          ).innerHTML = `<img src="${e.target.result}" alt="Photo">`;
+          document.querySelector("#photoUpload").style.display = "none";
+          checkFields();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert("Le fichier est trop grand !");
+      }
     };
     input.click();
+  });
+
+  // Vérifier si tous les champs sont remplis
+  function checkFields() {
+    const titre = document.querySelector(".title-secondModal_input").value;
+    const categorie = document.querySelector(
+      ".category-secondModal_select"
+    ).value;
+    const validerLink = document.querySelector("#photoValidate");
+    if (
+      titre &&
+      categorie &&
+      document.querySelector(".photo-container").hasChildNodes()
+    ) {
+      validerLink.style.backgroundColor = "#1D6154";
+      validerLink.style.cursor = "pointer";
+    } else {
+      validerLink.style.backgroundColor = "";
+      validerLink.style.cursor = "";
+    }
+  }
+
+  // Ajouter des écouteurs d'événements aux champs 'Titre' et 'Catégorie'
+  document
+    .querySelector(".title-secondModal_input")
+    .addEventListener("input", checkFields);
+  document
+    .querySelector(".category-secondModal_select")
+    .addEventListener("input", checkFields);
 });
 
-// Créer un élément select pour les catégories
+
+// Fonction pour faire une liste déroulante de catégorie
+async function displayCategories() {
+  const selectCat = await fetchCategories();
+  const select = document.querySelector(".category-secondModal_select");
+
+  selectCat.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category.id; // Utiliser l'id de la catégorie comme valeur
+    option.text = category.name; // Utiliser le nom de la catégorie comme texte
+    select.appendChild(option);
+  });
+  console.log("Affichage des catégories terminé !");
+}
+
+// Appeler la fonction lors du chargement de la page
+document.addEventListener("DOMContentLoaded", (event) => {
+  displayCategories();
+});
+// Créer une nouvelle option
+const option = document.createElement('option');
+option.value = 'Bar & restaurant'; 
+option.text = 'Bar & restaurant'; 
+
+// Obtenir le sélecteur
 const select = document.querySelector('.category-secondModal_select');
 
-// Ajouter les options de catégorie
-['Objets', 'Appartements', 'Hôtels et restaurants', 'Bar et restaurants'].forEach(function(categorie) {
-    const option = document.createElement('option');
-    option.value = categorie;
-    option.text = categorie;
-    select.appendChild(option);
-});
-
+// Ajouter la nouvelle option au sélecteur
+select.appendChild(option);
 
 
