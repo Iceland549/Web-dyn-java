@@ -280,7 +280,7 @@ li:hover {
 
 #titlemodal {
 	display: flex;
-	padding-top: 30px;
+	padding-top: 20px;
 	color: black;
 	justify-content: center;
 	align-items: center;
@@ -312,7 +312,7 @@ li:hover {
 	border-top: 1px solid 888;
 	margin: 40px auto;
 	position: absolute;
-	bottom: 90px;
+	bottom: 50px;
 	width: 420px;
 
 }
@@ -330,7 +330,7 @@ li:hover {
 	margin-top: 40px;
 	margin-inline: auto;
 	position: absolute;
-	bottom: 45px; 
+	bottom: 25px; 
 	width: 240px;
 }
 .line,
@@ -375,7 +375,7 @@ i.fa-regular.fa-image {
 
 .secondModal-content h2 {
 	display: flex;
-	padding-top: 30px;
+	padding-top: 20px;
 	color: black;
 	justify-content: center;
 	align-items: center;
@@ -405,7 +405,12 @@ i.fa-regular.fa-image {
 	color: #306685;
 	background-color: rgba(185, 197, 204, 1);
 }
-
+.photo-container {
+	display: flex;
+	justify-content: center;
+	border: 1px solid #E8F1F6;
+	background-color: #E8F1F6;
+}
 #photoUpload p {
 	font-size: 10px;
 }
@@ -430,7 +435,7 @@ i.fa-regular.fa-image {
 	background-color: #A7A7A7;
 	margin-inline: auto;
 	position: absolute;
-	bottom: 45px;
+	bottom: 25px;
 	width: 200px;
 	left: 0;
 	right: 0;
@@ -442,7 +447,7 @@ i.fa-regular.fa-image {
 	padding: 20px 0 10px;
 	font-family: 'Syne';
 	font-weight: lighter;
-	font-size: 15px;
+	font-size: 12px;
 	color: #000;
 }
 
@@ -457,9 +462,6 @@ i.fa-regular.fa-image {
 	border-radius: 0;
 }
 
-.modal-elements-container {
-
-}
 
 /* Media query pour un padding responsive */
 @media (max-width: 375px) {
