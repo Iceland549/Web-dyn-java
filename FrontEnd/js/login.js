@@ -7,12 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(event.target);
         const email = formData.get('email');
         const password = formData.get('password');
+        const erreurMessage = document.querySelector('.erreur_message');
 
         try {
             const response = await loginUser(email, password);
+            erreurMessage.style.display = 'none';
             loginSuccess(response);
         } catch (error) {
             console.error('Erreur de connexion:', error);
+            erreurMessage.innerText = error;
+            erreurMessage.style.display = 'block';
         }
     });
 });
