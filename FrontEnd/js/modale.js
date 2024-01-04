@@ -1,5 +1,6 @@
 // modale.js
-import { fetchWorks, deleteWork, fetchCategories } from "./api.js";
+import { fetchWorks, deleteWork, fetchCategories, addPhoto } from "./api.js";
+import { displayGallery } from "./home.js";
 
 // Créez une carte de travail pour chaque image
 function createWorkCard(work) {
@@ -30,6 +31,7 @@ function createWorkCard(work) {
 
   return article;
 }
+
 
 // Affichez les images de la galerie en miniature dans la modale
 async function displayGalleryInModal() {
@@ -92,6 +94,8 @@ closeTwo.addEventListener("click", (event) => {
   dialog.showModal();
 });
 
+
+let currentImageFile = null;
 // Ajout photo et changement btn Valider
 document.addEventListener("DOMContentLoaded", (event) => {
   // Ajouter une photo dans modale 2
@@ -104,9 +108,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
       if (file.size <= 4000000) {
         const reader = new FileReader();
         reader.onload = function (e) {
-          document.querySelector(
-            ".photo-container"
-          ).innerHTML = `<img src="${e.target.result}" alt="Photo">`;
+          currentImageFile = file;
+          document.querySelector(".photo-container").innerHTML = `<img src="${e.target.result}" alt="Photo">`;
           document.querySelector("#photoUpload").style.display = "none";
           checkFields();
         };
@@ -121,20 +124,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
   // Vérifier si tous les champs sont remplis
   function checkFields() {
     const titre = document.querySelector(".title-secondModal_input").value;
-    const categorie = document.querySelector(
-      ".category-secondModal_select"
-    ).value;
+    const categorie = document.querySelector(".category-secondModal_select").value;
     const validerLink = document.querySelector("#photoValidate");
-    if (
-      titre &&
-      categorie &&
-      document.querySelector(".photo-container").hasChildNodes()
-    ) {
-      validerLink.style.backgroundColor = "#1D6154";
-      validerLink.style.cursor = "pointer";
+    if (titre && categorie && document.querySelector(".photo-container").hasChildNodes()) {
+        validerLink.style.backgroundColor = "#1D6154";
+        validerLink.style.cursor = "pointer";
     } else {
-      validerLink.style.backgroundColor = "";
-      validerLink.style.cursor = "";
+        validerLink.style.backgroundColor = "";
+        validerLink.style.cursor = "";
     }
   }
 
@@ -167,14 +164,50 @@ document.addEventListener("DOMContentLoaded", (event) => {
   displayCategories();
 });
 // Créer une nouvelle option
-const option = document.createElement('option');
-option.value = 'Bar & restaurant'; 
-option.text = 'Bar & restaurant'; 
+const option = document.createElement("option");
+option.value = "4";
+option.text = "Bar & restaurant";
 
 // Obtenir le sélecteur
-const select = document.querySelector('.category-secondModal_select');
+const select = document.querySelector(".category-secondModal_select");
 
 // Ajouter la nouvelle option au sélecteur
 select.appendChild(option);
+
+
+
+
+// Fonction ajout nouvelle photo
+document.querySelector("#photoValidate").addEventListener("click", async function (event) {
+    event.preventDefault();
+    const titre = document.querySelector(".title-secondModal_input").value;
+    const categoryId = document.querySelector(".category-secondModal_select").value;
+
+    console.log("Titre:", titre);
+    console.log("Catégorie:", categoryId);
+    console.log("Image URL:", currentImageFile);
+
+    const photoData = new FormData();
+    photoData.append('title', titre);
+    photoData.append('category', categoryId);
+    photoData.append('image', currentImageFile);
+
+
+    try {
+        console.log("Données à envoyer:", photoData);
+
+        const newWork = await addPhoto(photoData); // Appel à la fonction addPhoto avec FormData
+        console.log("Nouveau travail ajouté:", newWork);
+
+        const gallery = document.querySelector(".gallery");
+        gallery.innerHTML = '';
+        await displayGallery();
+        const updatedWorks = await fetchWorks();
+        console.log("Travaux mis à jour:", updatedWorks);
+
+    } catch (error) {
+        console.error("Erreur lors de l'ajout de la photo :", error);
+    }
+});
 
 
