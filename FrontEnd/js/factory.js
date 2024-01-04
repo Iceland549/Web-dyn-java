@@ -28,35 +28,3 @@ export function createCategoryButtons(category) {
 
   return categoryElement;
 }
-
-/*
-export function updateCategory(index) {
-  const links = document.querySelectorAll(".categories-link");
-
-  // Mettre à jour la sélection visuelle des liens
-  links.forEach((link, i) => {
-    if (i === index) {
-      link.classList.add("active");
-    } else {
-      link.classList.remove("active");
-    }
-  });
-}
-
-// Fonction de filtrage des travaux par catégorie
-export function filterWorksByCategory(category) {
-  console.log("Catégorie sélectionnée :", category);
-  const gallery = document.querySelector(".gallery");
-  const works = document.querySelectorAll(".work");
-
-  works.forEach((work) => {
-    const workCategory = parseInt(work.dataset.categoryId);
-    console.log("Catégorie du travail :", workCategory);
-    if (category.name === "Tous" || workCategory === category.id) {
-      work.style.display = "block";
-    } else {
-      work.style.display = "none";
-    }
-  });
-}
-*/
