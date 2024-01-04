@@ -1,7 +1,7 @@
 /* api.js */
 
 // Exportation des fonctions pour une utilisation dans d’autres modules
-export { loginUser, fetchWorks, fetchCategories, deleteWork };
+export { loginUser, fetchWorks, fetchCategories, deleteWork, addPhoto };
 
 // Récupération des travaux depuis l’API
 async function fetchWorks() {
@@ -37,17 +37,49 @@ async function loginUser(email, password) {
   return log;
 }
 
+// Fonction pour supprimer des photos
 async function deleteWork(id) {
   const res = await fetch(`http://localhost:5678/api/works/${id}`, {
     method: "DELETE",
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
-      Authorization : `Bearer ${window.localStorage.getItem('token')}`
-     },
+      Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+    },
   });
 
   if (!res.ok) {
     throw new Error("Erreur de suppression");
   }
   return id;
+}
+
+// Fonction pour ajouter une photo
+async function addPhoto(photoData) {
+  try {
+    // Vérification du token
+    const token = window.localStorage.getItem("token");
+    console.log("Token récupéré:", token);
+
+    if (!token) {
+      throw new Error("Token manquant");
+    }
+    const response = await fetch("http://localhost:5678/api/works", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${window.localStorage.getItem("token")}`,
+      },
+      body: photoData,
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de l'ajout de la photo");
+    }
+
+    const newWork = await response.json();
+    console.log("Nouveau travail ajouté :", newWork);
+    return newWork;
+  } catch (error) {
+    console.error("Erreur lors de l'ajout de la photo :", error);
+    throw error;
+  }
 }
