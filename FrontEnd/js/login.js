@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loginSuccess(response) {
-    // Code à exécuter après une connexion réussie (redirection, stockage du token)
     window.localStorage.setItem('token', response.token);
     window.location.href = '/';
 }
