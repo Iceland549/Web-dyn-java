@@ -3,20 +3,27 @@
 import { fetchWorks, fetchCategories } from "./api.js";
 import { createWorkCard, createCategoryButtons } from "./factory.js";
 
+export { displayGallery };
+
+
 // Fonction pour afficher les images de la galerie
 async function displayGallery() {
-  const works = await fetchWorks();
-  const gallery = document.querySelector(".gallery");
-  console.log("Nombre de travaux récupérés :", works.length);
+  try {
 
-  works.forEach((work) => {
-    const workElement = createWorkCard(work);
-    gallery.appendChild(workElement);
-  });
-  console.log("Affichage des travaux terminé !");
+    const works = await fetchWorks();
+    console.log("Données récupérées depuis API pour displayGallery :", works);
+    const gallery = document.querySelector(".gallery");
+
+    works.forEach((work) => {
+      const workElement = createWorkCard(work);
+      gallery.appendChild(workElement);
+    });
+  } catch (error) {
+    console.error("Erreur lors de l'affichage de la galerie :", error);
+  }
 }
 
-// Cette fonction filtre les travaux en fonction de la catégorie sélectionnée et met à jour les liens de catégorie
+// Fonction filtrage des travaux et met à jour
 function filterWorksByCategory(category, index) {
   const works = document.querySelectorAll(".work");
   const links = document.querySelectorAll(".categories-link");
