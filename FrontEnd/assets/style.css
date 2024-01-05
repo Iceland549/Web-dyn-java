@@ -204,10 +204,12 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 }
 
 #introduction figure {
-	flex: 1
+	flex: 1;
+	margin-right: 2em;
 }
 
 #introduction img {
@@ -217,15 +219,20 @@ li:hover {
 }
 
 #introduction article {
-	flex: 1
+	flex: 1;
+	max-width: 50%;
 }
 
 #introduction h2 {
 	margin-bottom: 1em;
+	line-height: 1.2;
+	font-size: 2em;
 }
 
 #introduction p {
-	margin-bottom: 0.5em;
+	margin-bottom: 1em;
+	line-height: 1.5;
+	padding-right: 125px;
 }
 
 #portfolio h2 {
@@ -247,7 +254,11 @@ li:hover {
 	padding: 10px;
 	gap: 5px;
 }
-
+#modifierLink {
+	text-decoration: none;
+	color: black;
+	padding-left: 5px;
+}
 /* Styles de base pour la modale */
 .modal,
 #secondModal {
@@ -273,8 +284,8 @@ li:hover {
 	border: 1px solid #888;
 	width: 90%;
 	height: 90%;
-	max-width: 600px;
-	max-height: 90vh;
+	max-width: 50%;
+	max-height: 80vh;
 	position: relative;
 }
 
@@ -499,6 +510,7 @@ i.fa-regular.fa-image {
 	padding: 5px 15px;
 	border-radius: 25px;
 	background-color: #FFFEF8;
+	cursor: pointer;
 }
 
 .categories-link.active {
@@ -509,6 +521,7 @@ i.fa-regular.fa-image {
 #projectsContainer {
 	display: flex;
 	justify-content: center;
+	padding: 45px;
 	align-items: baseline;
 	gap: 25px;
 }
