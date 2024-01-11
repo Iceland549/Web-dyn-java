@@ -162,17 +162,6 @@ async function displayCategories() {
 document.addEventListener("DOMContentLoaded", (event) => {
   displayCategories();
 });
-// Créer une nouvelle option
-const option = document.createElement("option");
-option.value = "4";
-option.text = "Bar & restaurant";
-
-// Obtenir le sélecteur
-const select = document.querySelector(".category-secondModal_select");
-
-// Ajouter la nouvelle option au sélecteur
-select.appendChild(option);
-
 
 
 
