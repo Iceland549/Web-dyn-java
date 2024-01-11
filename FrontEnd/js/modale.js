@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
 
 // Fonction ajout nouvelle photo
-document.querySelector("#photoValidate").addEventListener("submit", async (event) => {
+document.querySelector("#photoForm").addEventListener("submit", async (event) => {
     event.preventDefault();
     const titre = document.querySelector(".title-secondModal_input").value;
     const categoryId = document.querySelector(".category-secondModal_select").value;
