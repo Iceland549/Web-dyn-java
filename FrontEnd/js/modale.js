@@ -187,9 +187,15 @@ document.querySelector("#photoForm").addEventListener("submit", async (event) =>
         const newWork = await addPhoto(photoData); // Appel à la fonction addPhoto avec FormData
         console.log("Nouveau travail ajouté:", newWork);
 
+        dialog.close();
+        dialog.style.display = "none";
+        dialog2.close();
+        dialog2.style.display = "none";
+
         const gallery = document.querySelector(".gallery");
         gallery.innerHTML = '';
         await displayGallery();
+        await displayGalleryInModal();
         const updatedWorks = await fetchWorks();
         console.log("Travaux mis à jour:", updatedWorks);
 
