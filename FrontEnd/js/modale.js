@@ -9,8 +9,8 @@ function createWorkCard(work) {
 
   const img = document.createElement("img");
   img.src = work.imageUrl;
-  img.style.width = "78px";
-  img.style.height = "104px";
+  img.style.width = "70px";
+  img.style.height = "100px";
   article.appendChild(img);
 
   const trashIcon = document.createElement("i");
@@ -152,11 +152,10 @@ async function displayCategories() {
 
   selectCat.forEach((category) => {
     const option = document.createElement("option");
-    option.value = category.id; // Utiliser l'id de la catégorie comme valeur
-    option.text = category.name; // Utiliser le nom de la catégorie comme texte
+    option.value = category.id; 
+    option.text = category.name; 
     select.appendChild(option);
   });
-  console.log("Affichage des catégories terminé !");
 }
 
 // Appeler la fonction lors du chargement de la page
@@ -178,7 +177,7 @@ select.appendChild(option);
 
 
 // Fonction ajout nouvelle photo
-document.querySelector("#photoValidate").addEventListener("click", async function (event) {
+document.querySelector("#photoValidate").addEventListener("submit", async (event) => {
     event.preventDefault();
     const titre = document.querySelector(".title-secondModal_input").value;
     const categoryId = document.querySelector(".category-secondModal_select").value;

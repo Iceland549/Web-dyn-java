@@ -11,7 +11,6 @@ async function displayGallery() {
   try {
 
     const works = await fetchWorks();
-    console.log("Données récupérées depuis API pour displayGallery :", works);
     const gallery = document.querySelector(".gallery");
 
     works.forEach((work) => {
